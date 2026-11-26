@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>몽타주실 — DRAW WHAT YOU HEARD?!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Nanum+Pen+Script&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ===== INTRO ===== -->
+<div id="intro" aria-label="인트로">
+ <div class="cam"><img class="ibg" src="assets/images/111.jpg" alt="어두운 방에서 컴퓨터 앞에 앉은 수사관의 실루엣"></div>
+ <div class="crt"></div>
+ <div class="lb t"></div><div class="lb b"></div>
+ <div class="ititle">
+  <div class="k" id="introK">CASE 001 · 정체불명의 남자</div>
+  <h1>몽타주실</h1>
+  <div class="en">DRAW WHAT YOU HEARD?!</div>
+  <div class="press">▶ 클릭해서 수사 시작</div>
+ </div>
+ <div class="pwrap"><img src="assets/images/polis.png" alt="경례하는 경찰관"></div>
+ <div class="bubble" id="bubble"><div class="who">담당 경찰관</div><p id="bLine"></p><div class="go" id="go"><button class="btn def" id="startBtn">사건 시작 ▶</button></div></div>
+ <button class="skip" id="skipBtn">SKIP ▸▸</button>
+ <div class="launch"><figure><img src="assets/images/222.jpg" alt="Paint 프로그램 창"><figcaption><div class="tbar"><span class="tt">몽타주실 Paint</span></div><div><svg viewBox="0 0 16 16" width="28" height="28" shape-rendering="crispEdges"><path d="M4 1h8v2l-3 4v2l3 4v2H4v-2l3-4V7L4 3z" fill="#ffe28a" stroke="#000"/></svg>사건 파일을 여는 중…</div><div class="bar"><i style="animation-delay:.05s"></i><i style="animation-delay:.12s"></i><i style="animation-delay:.2s"></i><i style="animation-delay:.28s"></i><i style="animation-delay:.36s"></i><i style="animation-delay:.44s"></i><i style="animation-delay:.52s"></i><i style="animation-delay:.6s"></i><i style="animation-delay:.68s"></i><i style="animation-delay:.76s"></i><i style="animation-delay:.84s"></i><i style="animation-delay:.9s"></i></div></figcaption></figure></div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app" class="win" aria-hidden="true">
+ <div class="tbar">
+  <svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="1" y="2" width="14" height="12" fill="#fff" stroke="#000"/><ellipse cx="8" cy="8" rx="3.5" ry="4.5" fill="#f6d7bd" stroke="#000"/><path d="M6 7h1M9 7h1M7 10h2" stroke="#000"/></svg>
+  <span class="tt" id="appTitle">몽타주 No.001 - 몽타주실 Paint</span>
+  <button class="tbtn" data-title="min" aria-label="최소화"><svg viewBox="0 0 9 9"><path d="M1 7h6v1H1z"/></svg></button>
+  <button class="tbtn" data-title="max" aria-label="최대화"><svg viewBox="0 0 9 9"><path d="M0 0h9v9H0V2h1v6h7V2H0z"/></svg></button>
+  <button class="tbtn x" data-title="close" aria-label="닫기"><svg viewBox="0 0 9 9"><path d="M1 1l7 7M8 1L1 8" stroke="#000" stroke-width="1.6"/></svg></button>
+ </div>
+ <nav class="menubar" id="menubar">
+  <div class="mwrap"><button class="mi" data-m="file">파일(<u>F</u>)</button><div class="menu win" id="m-file">
+   <button data-a="newgame">새 게임</button><hr><button data-a="save">몽타주 저장…<kbd>Ctrl+S</kbd></button><button data-a="submit">몽타주 제출…</button><button data-a="gallery">공동 갤러리</button><hr><button data-a="intro">인트로 다시 보기</button></div></div>
+  <div class="mwrap"><button class="mi" data-m="edit">편집(<u>E</u>)</button><div class="menu win" id="m-edit">
+   <button data-a="undo">실행 취소<kbd>Ctrl+Z</kbd></button><button data-a="redo">다시 실행<kbd>Ctrl+Y</kbd></button><hr><button data-a="colors">색 편집…</button><button data-a="clear">그림 지우기</button></div></div>
+  <div class="mwrap"><button class="mi" data-m="view">보기(<u>V</u>)</button><div class="menu win" id="m-view">
+   <button data-a="guide" id="mGuide">얼굴 비율 가이드<kbd>G</kbd></button><button data-a="side" id="mSide">사건 파일 창</button><button data-a="mute" id="mMute">대사 효과음<kbd>M</kbd></button></div></div>
+  <div class="mwrap"><button class="mi" data-m="case">사건(<u>C</u>)</button><div class="menu win" id="m-case">
+   <button data-a="next">다음 진술<kbd>→</kbd></button><button data-a="restart">첫 증인부터 다시 듣기</button></div></div>
+  <div class="mwrap"><button class="mi" data-m="help">도움말(<u>H</u>)</button><div class="menu win" id="m-help">
+   <button data-a="keys">단축키</button><button data-a="about">몽타주실 정보</button></div></div>
+  <div class="mright"><button class="btn" id="galBtn2">공동 갤러리</button><button class="btn def" id="subBtn2">몽타주 제출</button></div>
+ </nav>
+
+ <div class="body" id="body">
+  <aside class="toolbox" aria-label="그리기 도구">
+   <div class="tg">
+    <button class="tb" id="tPen" data-help="연필: 몽타주를 그립니다. (P)" aria-label="연필"><svg viewBox="0 0 16 16"><path d="M11 1l4 4-9 9-5 1 1-5z" fill="#ffd34d" stroke="#000"/><path d="M2 10l4 4" stroke="#000"/><path d="M11 1l4 4-2 2-4-4z" fill="#ff8fa8" stroke="#000"/></svg></button>
+    <button class="tb" id="tEra" data-help="지우개: 그린 선을 지웁니다. (E)" aria-label="지우개"><svg viewBox="0 0 16 16"><path d="M1 10l7-7 6 6-5 5H5z" fill="#ff9ec4" stroke="#000"/><path d="M4 7l6 6" stroke="#000"/><path d="M5 15h10" stroke="#000"/></svg></button>
+    <button class="tb" id="tFill" data-help="페인트 통: 닫힌 영역을 선택한 색으로 칠합니다. (F)" aria-label="페인트 통"><svg viewBox="0 0 16 16"><path d="M2 7l5-5 6 6-5 5z" fill="#d8d8d8" stroke="#000"/><path d="M2 7l6 6" stroke="#000"/><path d="M5 4q-2-3 1-3" fill="none" stroke="#000"/><path d="M12 9q2 3 2 4.5a1.5 1.5 0 01-3 0q0-1.5 1-4.5z" fill="#0040ff" stroke="#000"/></svg></button>
+    <button class="tb" id="tUndo" data-help="실행 취소 (Ctrl+Z)" aria-label="실행 취소"><svg viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.6"><path d="M6 2L2 6l4 4"/><path d="M2 6h8a4 4 0 010 8H7"/></svg></button>
+    <button class="tb" id="tRedo" data-help="다시 실행 (Ctrl+Y)" aria-label="다시 실행"><svg viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.6"><path d="M10 2l4 4-4 4"/><path d="M14 6H6a4 4 0 000 8h3"/></svg></button>
+    <button class="tb" id="tClear" data-help="그림 지우기: 용지를 모두 비웁니다." aria-label="그림 지우기"><svg viewBox="0 0 16 16"><path d="M3 1h7l3 3v11H3z" fill="#fff" stroke="#000"/><path d="M10 1v3h3" fill="none" stroke="#000"/><path d="M5 7l6 6M11 7l-6 6" stroke="#c00000" stroke-width="1.6"/></svg></button>
+    <button class="tb" id="tSave" data-help="저장: 몽타주를 PNG로 저장합니다." aria-label="저장"><svg viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#000080"/><rect x="4" y="1" width="8" height="5" fill="#c0c0c0"/><rect x="9" y="2" width="2" height="3" fill="#000080"/><rect x="3" y="9" width="10" height="6" fill="#fff"/><path d="M5 11h6M5 13h6" stroke="#808080"/></svg></button>
+    <button class="tb" id="tGuide" data-help="얼굴 비율 가이드를 켜고 끕니다. (G)" aria-label="얼굴 가이드"><svg viewBox="0 0 16 16" fill="none"><ellipse cx="8" cy="8" rx="5" ry="6.5" stroke="#000" stroke-dasharray="2 1"/><path d="M2 7h12M8 1v14" stroke="#800080" stroke-dasharray="1 1"/></svg></button>
+    <button class="tb snd" id="snd" data-help="대사 효과음 켜기/끄기 (M)" aria-label="소리"></button>
+   </div>
+   <div class="opt" role="group" aria-label="굵기">
+    <div id="szPresets"></div>
+    <input type="range" id="sz" min="2" max="80" value="10" aria-label="브러시 굵기">
+    <output id="szVal">10px</output>
+   </div>
+   <div class="tlabel" id="toolName">연필</div>
+  </aside>
+
+  <section class="center">
+   <div class="ws"><div id="wrap">
+    <div class="paper" id="paper">
+     <svg class="guide" id="guide" viewBox="0 0 1600 1000" aria-hidden="true"><g fill="none" stroke="#7b5cd6" stroke-width="2.5" stroke-dasharray="10 10"><ellipse cx="800" cy="500" rx="235" ry="315"/><path d="M800 150v700M540 470h520M590 610h420M620 700h360"/></g><g font-family="Gulim,Nanum Gothic,sans-serif" font-size="26" fill="#7b5cd6"><text x="1075" y="478">눈</text><text x="1025" y="618">코</text><text x="995" y="708">입</text></g></svg>
+     <canvas id="cv" width="1600" height="1000" aria-label="몽타주 그리기 캔버스"></canvas>
+     <div class="hint" id="hint">증언을 들으며<br>떠오르는 얼굴을 그려보세요</div>
+     <div class="cursor" id="cursor"></div>
+     <div class="paper-sig" id="sig">수사관: 미서명</div>
+     <div class="paper-tag" id="pTag">MONTAGE · No.001</div>
+     <i class="hd r"></i><i class="hd b"></i><i class="hd rb"></i>
+    </div>
+   </div></div>
+
+   <div class="wit" id="witness">
+    <div class="wtabs" id="wtabs" role="tablist"></div>
+    <div class="wpane">
+     <div class="portrait" id="wPic"></div>
+     <div><div class="wname"><b id="wName"></b><span id="wRole"></span></div><p id="wLine" title="클릭하면 바로 표시"></p></div>
+     <div class="wctrl"><div class="wtop"><div class="dots" id="wDots"></div></div><button class="btn def" id="nextBtn">다음 ▸</button></div>
+    </div>
+   </div>
+  </section>
+
+  <aside class="side win" id="side" aria-label="사건 파일">
+   <div class="tbar dim"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path d="M1 3h5l1 2h8v9H1z" fill="#ffe28a" stroke="#000"/></svg><span class="tt" id="sideTitle">사건 파일 - CASE 001</span><button class="tbtn x" id="sideX" aria-label="사건 파일 닫기"><svg viewBox="0 0 9 9"><path d="M1 1l7 7M8 1L1 8" stroke="#000" stroke-width="1.6"/></svg></button></div>
+   <div class="board" id="board">
+    <div class="pinrow">
+     <figure class="polaroid pin" style="--r:-4deg">
+      <svg viewBox="0 0 120 130" aria-hidden="true"><defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c6577"/><stop offset="1" stop-color="#3a3444"/></linearGradient></defs><rect width="120" height="130" fill="url(#pg)"/><path d="M14 130c4-30 22-42 46-42s42 12 46 42z" fill="#1d1824"/><ellipse cx="60" cy="56" rx="24" ry="30" fill="#1d1824"/><text x="60" y="70" text-anchor="middle" font-family="Nanum Gothic,sans-serif" font-weight="800" font-size="40" fill="#B6A0FF">?</text></svg>
+      <figcaption>신원 미상 · 남성</figcaption>
+     </figure>
+     <div class="filecard pin"><b id="fcNo">2026-1124-001</b><dl><dt>분류</dt><dd id="fc0"></dd><dt>목격 장소</dt><dd id="fc1"></dd><dt>특이사항</dt><dd id="fc2"></dd></dl></div>
+    </div>
+    <div class="photos" id="photos"></div>
+    <h3>수집된 단서 <span id="clueN">0</span></h3>
+    <div class="notes" id="notes"></div>
+   </div>
+   <div class="foot"><button class="btn def" id="subBtn">몽타주 제출…</button><button class="btn" id="galBtn">공동 갤러리</button></div>
+  </aside>
+ </div>
+
+ <div class="palbar">
+  <button class="curc" id="curc" data-help="현재 색: 클릭하면 색 편집 창이 열립니다." aria-label="현재 색, 색 편집 열기"><i class="bg"></i><i class="fg" id="fg"></i></button>
+  <div class="sw" id="sw"></div>
+  <button class="btn" id="cedBtn" data-help="색 편집: 팔레트에 없는 색을 직접 만듭니다.">색 편집…</button><span class="palhint">색을 클릭해 고르세요 · 팔레트에 없는 색은 [색 편집]에서 만들 수 있어요</span>
+ </div>
+ <div class="status">
+  <div class="cell grow" id="help">도움말을 보려면 [도움말] 메뉴에서 [단축키]를 클릭하십시오.</div>
+  <div class="cell fix" id="coord"></div>
+  <div class="cell fix" id="sW">증언 0/4</div>
+  <div class="cell fix" id="sC">단서 0</div>
+ </div>
+</div>
+
+<div class="taskbar" aria-hidden="true" id="taskbar">
+ <button class="btn start" id="startMenu"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path d="M8 1l2 4 5 .5-3.5 3.5 1 5L8 11.5 3.5 14l1-5L1 5.5 6 5z" fill="#ffd34d" stroke="#000"/></svg>시작</button>
+ <button class="btn task"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="1" y="2" width="14" height="12" fill="#fff" stroke="#000"/><ellipse cx="8" cy="8" rx="3.5" ry="4.5" fill="#f6d7bd" stroke="#000"/></svg><span id="taskT">몽타주 No.001 - 몽타주실…</span></button>
+ <div class="tray"><button id="traySnd" aria-label="대사 효과음 켜기/끄기"></button><span id="sT">00:00</span></div>
+</div>
+
+<div id="result" hidden aria-live="polite">
+ <div class="r-col">
+  <div class="r-head" id="rHead">CASE 001 · 몽타주 대조</div>
+  <div class="win"><div class="tbar"><span class="tt">몽타주 대조 프로그램</span></div><div class="rb">
+   <div class="r-mont"><img id="rMont" alt="내 몽타주"><div class="scan"></div></div>
+   <div class="meter"><div class="lab"><span id="rState">범인 사진과 대조하는 중…</span><span class="pct" id="rPct">0%</span></div><div class="bar"><i id="rBar"></i><b class="th"></b><span class="thl">검거 기준 80%</span></div></div>
+   <p class="r-note">※ 색 분포 · 실루엣 · 선과 면의 배치를 범인 사진과 비교해 계산한 근사 점수입니다. AI 얼굴 인식이 아니며, 같은 그림은 항상 같은 점수를 받습니다.</p>
+   <p class="r-save" id="rSave"></p>
+  </div></div>
+ </div>
+ <div class="r-stage">
+  <div class="sp-wrap" id="spWrap"><img id="spImg" src="" alt=""></div>
+  <div class="bars"><span id="barsLbl">CASE 001 · 수감 완료</span></div>
+  <div class="r-name" id="rName"><small>범인의 정체는…</small><b id="rSus"></b></div>
+ </div>
+ <div class="r-col"><div class="verdict win" id="verdict"></div></div>
+ <img class="car" src="assets/images/car.png" alt="경찰차">
+</div>
+<div class="modal" id="modal" role="dialog" aria-modal="true"><div class="sheet win" id="sheet"></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="js/config.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
